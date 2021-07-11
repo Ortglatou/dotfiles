@@ -56,7 +56,10 @@ picom:
 
 st:
 	@cd $(home)/Gits/dotfiles/st;\
-	make && make install;
+	make && make install;\
+	cp config.h ..;\
+	make clean;\
+	mv -f ../config.h ./;
 
 xmonad:
 	@[ ! -d "$(XMONAD_DIR)" -a ! -f "$(XMONAD_DIR)" ] &&\
