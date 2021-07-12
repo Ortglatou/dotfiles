@@ -2,6 +2,8 @@ NVIM_DIR = "$(home)/.config/nvim"
 PICOM_DIR = "$(home)/.config/picom"
 XMONAD_DIR = "$(home)/.xmonad"
 XMOBAR_DIR = "$(home)/.config/xmobar"
+ZSHRC_DIR = "$(home)/.zshrc"
+
 
 STABLE_CMD = "install"
 
@@ -44,7 +46,7 @@ get_vars:
 	fi;\
 	make pos_vars -e "user=$${user}" "home=$${home}" -B;
 
-pos_vars: nvim picom st xmonad xmobar;
+pos_vars: nvim picom st xmonad xmobar zshrc;
 
 nvim:
 	[ ! -d "$(NVIM_DIR)" -a ! -f "$(NVIM_DIR)" ] &&\
@@ -69,3 +71,11 @@ xmonad:
 xmobar:
 	[ ! -d "$(XMOBAR_DIR)" -a ! -f "$(XMOBAR_DIR)" ] &&\
 	ln -s "`pwd`/xmobar" "$(XMOBAR_DIR)";
+
+zshrc:
+	[ -d "$(ZSHRC_DIR)" -o -f "$(ZSHRC_DIR)" ] &&\
+	mv "$(ZSHRC_DIR)" "$(ZSHRC_DIR).bkp";\
+	su - $${user} -c 'sh -c "$$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"';\
+	[ -d "$(ZSHRC_DIR)" -o -f "$(ZSHRC_DIR)" ] &&\
+	rm -Rf "$(ZSHRC_DIR)";\
+	ln -s "`pwd`/zshrc/zshrc" "$(ZSHRC_DIR)";
