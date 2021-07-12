@@ -20,3 +20,8 @@ x</span> )
 * Partial screen screenshot ( <span style="font-family: 'monospaced'">\<shift\>
 \<print\></span> )
   * Take a print of the selected portion of the screen
+
+The visual is actually pretty default, but here is a screenshot (I use nitrogen
+to manage the wallpaper)
+
+![Xmonad_print](../assets/xmonad_print.jpeg)
