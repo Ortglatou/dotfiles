@@ -9,12 +9,11 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'} " Autocompletions and things like this
     Plug 'liuchengxu/vim-which-key' " Key helper
     Plug 'tpope/vim-fugitive' " Git controller
-    Plug 'vim-airline/vim-airline' " Statusbar
-    Plug 'vim-airline/vim-airline-themes' " Statusbar themes
+    Plug 'itchyny/lightline.vim' " Vim bottom-line
     Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  } " Markdown live preview
 call plug#end()
 
 source ${HOME}/.config/nvim/plug-config/colorscheme.vim
 source ${HOME}/.config/nvim/plug-config/coc.vim
 source ${HOME}/.config/nvim/plug-config/whichkey.vim
-source ${HOME}/.config/nvim/plug-config/airline.vim
+source ${HOME}/.config/nvim/plug-config/lightline.vim
