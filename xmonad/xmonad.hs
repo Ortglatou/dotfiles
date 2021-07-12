@@ -12,31 +12,31 @@ import qualified Data.Map        as M
 
 -- VARIABLES --
 
-myTerminal      = "st" -- Command to open terminal
+myTerminal           = "st" -- Command to open terminal
 
-appLauncher = "dmenu_run -nb '#240a0a' -nf '#f6f7f7' -sb '#50575e' -sf '#f6f7f7' -fn 'firacode-9'" -- Command to open application launcher
+appLauncher          = "dmenu_run -nb '#240a0a' -nf '#f6f7f7' -sb '#50575e' -sf '#f6f7f7' -fn 'firacode-9'" -- Command to open application launcher
 
-emojiPicker = "cat /usr/share/consts/emojis.txt | dmenu -l 16 -nb '#240a0a' -nf '#f6f7f7' -sb '#50575e' -sf '#f6f7f7' -fn twemoji | awk '{printf $1}' | xclip -selection clipboard" -- Command to open emoji picker
+emojiPicker          = "cat /usr/share/consts/emojis.txt | dmenu -l 16 -nb '#240a0a' -nf '#f6f7f7' -sb '#50575e' -sf '#f6f7f7' -fn twemoji | awk '{printf $1}' | xclip -selection clipboard" -- Command to open emoji picker
 
-xkiller = "xkill"
+xkiller              = "xkill"
 
-xmonadBar = "ps -Aa | grep xmobar > /dev/null && pkill xmobar || xmobar ~/.config/xmobar/xmonad.bar"
+xmonadBar            = "ps -Aa | grep xmobar > /dev/null && pkill xmobar || xmobar ~/.config/xmobar/xmonad.bar"
 
-screenshotFull = "import -window root ~/Imagens/screenshots/`date +%Y-%m-%d_%H:%M:%S.jpeg`"
+screenshotFull       = "import -window root ~/Imagens/screenshots/`date +%Y-%m-%d_%H:%M:%S.jpeg`"
 
-screenshotSel  = "import ~/Imagens/screenshots/`date +%Y-%m-%d_%H:%M:%S.jpeg`"
+screenshotSel        = "import ~/Imagens/screenshots/`date +%Y-%m-%d_%H:%M:%S.jpeg`"
 
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = False -- If the focus should switch with the mouse
+myFocusFollowsMouse  = False -- If the focus should switch with the mouse
 
-myClickJustFocuses :: Bool
-myClickJustFocuses = True -- If the click to change focus should be a valid click
+myClickJustFocuses  :: Bool
+myClickJustFocuses   = True -- If the click to change focus should be a valid click
 
-myBorderWidth   = 2 -- Border width
+myBorderWidth        = 2 -- Border width
 
-myModMask       = mod1Mask -- Default modkey (left alt)
+myModMask            = mod1Mask -- Default modkey (left alt)
 
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"] -- Workspaces' names
+myWorkspaces         = ["1","2","3","4","5","6","7","8","9"] -- Workspaces' names
 
 myNormalBorderColor  = "#007784" -- Border of unselected
 myFocusedBorderColor = "#6e060a" -- Border of selected
