@@ -5,7 +5,7 @@ XMOBAR_DIR = "$(home)/.config/xmobar"
 ZSHRC_DIR = "$(home)/.zshrc"
 
 
-STABLE_CMD = "install"
+STABLE_CMD = "install remove"
 
 all:
 	@printf "Available commands:\n";\
@@ -15,6 +15,9 @@ all:
 
 
 install: get_vars;
+
+uninstall: get_vars;
+	rm -f $(NVIM_DIR) $(PICOM_DIR) $(XMONAD_DIR) $(XMOBAR_DIR) $(ZSHRC_DIR)
 
 get_vars:
 	@user="`who | awk 'NR==1{print $$1}'`";\
