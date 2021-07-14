@@ -1,8 +1,9 @@
-NVIM_DIR = "$(home)/.config/nvim"
-PICOM_DIR = "$(home)/.config/picom"
+NVIM_DIR   = "$(home)/.config/nvim"
+PICOM_DIR  = "$(home)/.config/picom"
+TMUX_DIR   = "$(home)/.tmux.conf"
 XMONAD_DIR = "$(home)/.xmonad"
 XMOBAR_DIR = "$(home)/.config/xmobar"
-ZSHRC_DIR = "$(home)/.zshrc"
+ZSHRC_DIR  = "$(home)/.zshrc"
 
 
 STABLE_CMD = "install remove"
@@ -66,6 +67,12 @@ st:
 	make clean;\
 	cd ..;\
 	git restore ./st/config.h;
+
+tmux:
+	[ ! -d "$(home)/.tmux/plugins/tpm" -a ! -f "$(home)/.tmux/plugins/tpm" ] &&\
+	git clone https://github.com/tmux-plugins/tpm $(home)/.tmux/plugins/tpm;\
+	[ ! -d "$(TMUX_DIR)" -a ! -f "$(TMUX_DIR)" ] &&\
+	ln -s "`pwd`/tmux/tmux.conf" "$(TMUX_DIR)";
 
 xmonad:
 	[ ! -d "$(XMONAD_DIR)" -a ! -f "$(XMONAD_DIR)" ] &&\
