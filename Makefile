@@ -15,21 +15,22 @@ all:
 	done;
 
 
-install: get_vars;
+install: use_vars;
 
-uninstall: get_vars;
-	rm -f $(NVIM_DIR) $(PICOM_DIR) $(XMONAD_DIR) $(XMOBAR_DIR) $(ZSHRC_DIR)
+uninstall:
+	@make use_vars -e uninstall=y -B
 
-get_vars:
-	@user="`who | awk 'NR==1{print $$1}'`";\
+use_vars:
+	@ [ -z "$$(printf '$(nvim)$(picom)$(tmux)$(xmonad)$(xmobar)$(zshrc)$(uninstall)')" ] && printf 'You must specify the targets to instaln' && exit 1;\
+	user="`who | awk 'NR==1{print $$1}'`";\
 	while [ "$${choose}" != 'Y' -a "$${choose}" != 'N' ]; do\
 		printf "Is $${user} your user? [y/n] ";\
 		read choose;\
 		choose="`printf \"$${choose}\" | tr '[:lower:]' '[:upper:]'`";\
 	done;\
-	if [ "$${choose}" == 'N' ]; then\
+	if [ "$${choose}" = 'N' ]; then\
 		user=;\
-		while ! id "$${user}" &>/dev/null; do\
+		while ! id "$${user}" 1>/dev/null 2>/dev/null; do\
 			printf "What is the user? ";\
 			read user;\
 		done;\
@@ -41,16 +42,20 @@ get_vars:
 		read choose;\
 		choose="`printf \"$${choose}\" | tr '[:lower:]' '[:upper:]'`";\
 	done;\
-	if [ "$${choose}" == 'N' ]; then\
+	if [ "$${choose}" = 'N' ]; then\
 		home=;\
 		while [ ! -d "$${home}" ]; do\
 			printf "What is the user home? ";\
 			read home;\
 		done;\
 	fi;\
-	make pos_vars -e "user=$${user}" "home=$${home}" -B;
-
-pos_vars: nvim picom st xmonad xmobar zshrc;
+	[ -z '$(nvim)' ] && make nvim -e "user=$${user}" "home=$${home}" -B;\
+	[ -z '$(picom)' ] && make picom -e "user=$${user}" "home=$${home}" -B;\
+	[ -z '$(tmux)' ] && make tmux -e "user=$${user}" "home=$${home}" -B;\
+	[ -z '$(xmonad)' ] && make xmonad -e "user=$${user}" "home=$${home}" -B;\
+	[ -z '$(xmobar)' ] && make xmobar -e "user=$${user}" "home=$${home}" -B;\
+	[ -z '$(zshrc)' ] && make zshrc -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(uninstall)' ] && rm -f '$(NVIM_DIR)' '$(PICOM_DIR)' '$(XMONAD_DIR)' '$(XMOBAR_DIR)' '$(ZSHRC_DIR)'
 
 nvim:
 	[ ! -d "$(NVIM_DIR)" -a ! -f "$(NVIM_DIR)" ] &&\
