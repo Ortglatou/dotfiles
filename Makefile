@@ -1,19 +1,23 @@
-NVIM_DIR   = "$(home)/.config/nvim"
-PICOM_DIR  = "$(home)/.config/picom"
-TMUX_DIR   = "$(home)/.tmux.conf"
-XMONAD_DIR = "$(home)/.xmonad"
-XMOBAR_DIR = "$(home)/.config/xmobar"
-ZSHRC_DIR  = "$(home)/.zshrc"
-
-
-STABLE_CMD = "install remove"
+NVIM_DIR   = $(home)/.config/nvim
+PICOM_DIR  = $(home)/.config/picom
+TMUX_DIR   = $(home)/.tmux.conf
+XMONAD_DIR = $(home)/.xmonad
+XMOBAR_DIR = $(home)/.config/xmobar
+ZSHRC_DIR  = $(home)/.zshrc
 
 all:
-	@printf "Available commands:\n";\
-	for cmd in $(STABLE_CMD); do\
-		printf "\t$${cmd}\n";\
-	done;
-
+	@printf "Available commands:\n";
+	@printf "\tinstall\n";
+	@printf "\t\t* nvim\n";
+	@printf "\t\t* picom\n";
+	@printf "\t\t* st\n";
+	@printf "\t\t* tmux\n";
+	@printf "\t\t* xmonad\n";
+	@printf "\t\t* xmobar\n";
+	@printf "\t\t* zshrc\n";
+	@printf "\tuninstall\n";
+	@printf "Example:\n";
+	@printf "\tsudo make install nvim=y\n"
 
 install: use_vars;
 
@@ -21,7 +25,7 @@ uninstall:
 	@make use_vars -e uninstall=y -B
 
 use_vars:
-	@ [ -z "$$(printf '$(nvim)$(picom)$(tmux)$(xmonad)$(xmobar)$(zshrc)$(uninstall)')" ] && printf 'You must specify the targets to instaln' && exit 1;\
+	@[ -z "$$(printf '$(nvim)$(picom)$(st)$(tmux)$(xmonad)$(xmobar)$(zshrc)$(uninstall)')" ] && printf 'You must specify the targets to instaln' && exit 1;\
 	user="`who | awk 'NR==1{print $$1}'`";\
 	while [ "$${choose}" != 'Y' -a "$${choose}" != 'N' ]; do\
 		printf "Is $${user} your user? [y/n] ";\
@@ -49,13 +53,18 @@ use_vars:
 			read home;\
 		done;\
 	fi;\
-	[ -z '$(nvim)' ] && make nvim -e "user=$${user}" "home=$${home}" -B;\
-	[ -z '$(picom)' ] && make picom -e "user=$${user}" "home=$${home}" -B;\
-	[ -z '$(tmux)' ] && make tmux -e "user=$${user}" "home=$${home}" -B;\
-	[ -z '$(xmonad)' ] && make xmonad -e "user=$${user}" "home=$${home}" -B;\
-	[ -z '$(xmobar)' ] && make xmobar -e "user=$${user}" "home=$${home}" -B;\
-	[ -z '$(zshrc)' ] && make zshrc -e "user=$${user}" "home=$${home}" -B;\
-	[ ! -z '$(uninstall)' ] && rm -f '$(NVIM_DIR)' '$(PICOM_DIR)' '$(XMONAD_DIR)' '$(XMOBAR_DIR)' '$(ZSHRC_DIR)'
+	[ ! -z '$(nvim)' ] && make nvim -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(picom)' ] && make picom -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(st)' ] && make st -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(tmux)' ] && make tmux -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(xmonad)' ] && make xmonad -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(xmobar)' ] && make xmobar -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(zshrc)' ] && make zshrc -e "user=$${user}" "home=$${home}" -B;\
+	[ ! -z '$(uninstall)' ] && make uninstall_pos_vars -e "user=$${user}" "home=$${home}" -B;\
+	exit 0;
+
+uninstall_pos_vars:
+	rm -f '$(NVIM_DIR)' '$(PICOM_DIR)' '$(XMONAD_DIR)' '$(XMOBAR_DIR)' '$(ZSHRC_DIR)'
 
 nvim:
 	[ ! -d "$(NVIM_DIR)" -a ! -f "$(NVIM_DIR)" ] &&\
